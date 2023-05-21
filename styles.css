@@ -1,0 +1,159 @@
+* {
+  padding: 0; /* espaçamento interno */
+  margin: 0; /* espaçamento externo */
+  box-sizing: border-box; /* ele vai respeitar o tamanho que eu irei definir, já que alguns tamanhos podem mudar "sozinhos" */
+}
+
+:root {
+  font-size: 16px;
+}
+
+/*Essa parte inteira de webkit é apenas para customizar a scrollbar*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #2c2c31;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9e9ea0;
+}
+
+@keyframes entrada {
+  /*Comando feito para a "animaçãozinha" ao entrar na página*/
+  from {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translatey(0);
+  }
+}
+
+body {
+  background-color: rgb(0, 0, 0);
+  color: #eaeaea;
+
+  font-family: "Roboto", sans-serif;
+
+  display: grid;
+  grid-template-areas: "profile timeline";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100vh;
+}
+nav {
+  padding: 64px;
+  grid-area: timeline;
+
+  overflow-y: scroll;
+  animation: entrada 1.5s ease-in-out;
+}
+.memory {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  text-decoration: none;
+  margin-bottom: 64px;
+}
+
+.memory small {
+  color: #bebebf;
+  font-size: 0.75rem; /* unidade de medida pra se baseiar no root na linha 8 
+  precisamos usar um tamanho equivalente ao tamanho 12 mas usando de refencia o root (antes de 0.75 era 12) dai tu faz 12/16 = 0.75 */
+}
+
+.memory h1 {
+  font-size: 2rem;
+  color: #eaeaea;
+}
+
+.memory img {
+  width: 60%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+
+  transition: transform 0.3s ease-in-out; /*A transição sempre vai no ele que é modificado*/
+}
+
+.memory div {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.memory:hover img /* no meu código em expecifico não é necessário a tag "img" pois o link já é a imagem em si */ {
+  transform: scale(1.1);
+}
+
+.memory p {
+  font-size: 1.2rem;
+  line-height: 28px;
+  color: #bebebf;
+}
+
+aside {
+  grid-area: profile;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  border-right: 1px solid;
+  border-image: linear-gradient(#727275, #2c2c31) 1;
+
+  background-image: url("./assets/background.svg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+aside * /*O "*" serve para selecionar todos os elementos dentro do aside, fazendo com que apenas a imagem e texto sejam modificados.*/ {
+  animation: entrada 1.5s ease-in-out;
+}
+
+aside img:nth-child(2) {
+  max-width: 200px;
+  max-height: 150px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  background: linear-gradient(#d39e33, #ed5636, #633bbc) padding-box,
+    linear-gradient(#d39e33, #ed5636, #633bbc) border-box;
+}
+
+aside p {
+  font-size: 2rem;
+  text-align: center;
+}
+
+aside span {
+  font-size: 0.75rem;
+  color: #9e9ea0;
+}
+/*Aqui estamos modificando o grid para deixar o site mais responsivel em dispositivos menores */
+@media (max-width: 768px) {
+  :root{ /*Quando o dispositivo for menor isso irá alterar a fonte padrão usada de referencia assim todas as fontes vão se ajudas automáticamente*/
+    font-size: 14px;
+  }
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2 0.8;
+    grid-template-areas:
+      "profile"
+      "timeline";
+  }
+  aside {
+    /*Como não tem uma divisão não precisamos da barra da direita*/
+    border-right: none;
+    padding: 32px /* Em cima e em baixo*/ 12px; /* Nos lados */
+  }
+  /*tirando a barra cinza scrollbar */
+  nav {
+    overflow-y: visible;
+    padding: 22px;
+  }
+}
